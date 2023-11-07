@@ -1,0 +1,14 @@
+\echo escript principal per la base de dades
+\echo -------------------------------------------
+
+\c postgres
+DROP DATABASE proyecto616;
+CREATE DATABASE proyecto616;
+\c proyecto616
+\i 'usuario\\usuario.sql'
+\i 'jugador\\jugador.sql'
+\i 'logro\\logro.sql'
+\i 'objeto\\objeto.sql'
+\i 'personaje\\personaje.sql'
+\i 'puntuacion\\puntuacion.sql'
+\i 'logrosJugador\\logrosJugador.sql'
