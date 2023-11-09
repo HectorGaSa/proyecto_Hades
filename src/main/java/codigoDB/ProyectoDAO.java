@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package codigo;
+package codigoDB;
 
+import modelo.User;
 import java.io.File;
 import java.io.FileInputStream;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +23,8 @@ public class ProyectoDAO extends HttpServlet {
 
     //Este metodo sirve para poder conectarnos a la base de datos que queremos usar. Tan solo necesitaremos el usuario, la contraseña y la url, los cuales estan dentro del archivo properties.
     public void conectar() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-        Emulador.configuracion.load(new FileInputStream(new File(System.getProperty("user.home") + "/Desktop/Project_Hades/proyecto.conf")));
         Class.forName("org.postgresql.Driver");
-        conexion = DriverManager.getConnection(Emulador.configuracion.getProperty("Url"), Emulador.configuracion.getProperty("UserDB"), Emulador.configuracion.getProperty("Passwd"));
+        conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/proyecto616", "postgres", "1234");
     }
 
     //Este metodo simplemente es para desconectarnos de la base de datos.
@@ -41,7 +41,7 @@ public class ProyectoDAO extends HttpServlet {
             if (existeUsuario(u.getNom_usuari()) == true) {
                 System.out.println("Este usuario ya esta registrado!");
             } else {
-                String insert = "insert into usario(nom_usuari, contrasenya, correu, tipus) values (?, ?, ?, ?);";
+                String insert = "insert into usuario(nom_usuari, contrasenya, correu, tipus) values (?, ?, ?, ?);";
                 try (PreparedStatement ps = conexion.prepareStatement(insert)) {
                     ps.setString(1, u.getNom_usuari());
                     ps.setString(2, u.getContrasenya());
@@ -111,7 +111,7 @@ public class ProyectoDAO extends HttpServlet {
         if (conexion == null) {
             throw new ConexionApagadaException();
         } else {
-            String query = "select nom_usuari from usario where nom_usuari = '" + usuari + "';";
+            String query = "select nom_usuari from usuario where nom_usuari = '" + usuari + "';";
             boolean existe;
             try (Statement st = conexion.createStatement(); ResultSet rs = st.executeQuery(query)) {
                 existe = rs.next();

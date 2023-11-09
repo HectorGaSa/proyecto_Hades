@@ -2,10 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package codigo;
+package servelet;
 
-import codigo.ProyectoDAO;
-import codigo.User;
+import codigoDB.ConexionApagadaException;
+import codigoDB.ProyectoDAO;
+import codigoDB.ProyectoDAO;
+import modelo.User;
+import modelo.User;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author usuario
  */
 @WebServlet(urlPatterns={"/SvUsuarios"})
-public class SvUsuarios extends HttpServlet {
+public class Servelet extends HttpServlet {
     
-    public SvUsuarios(){
+    public Servelet(){
         
     }
     
@@ -51,22 +54,22 @@ public class SvUsuarios extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String usuario = request.getParameter("usuario");
-        String password = request.getParameter("password");
+        String password = request.getParameter("contrasena");
         try {
             controlador.conectar();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(SvUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        User user = new User(usuario, password, email, "");
+        User user = new User(usuario, password, email, "jugador");
         try {
             controlador.alta(user);
         } catch (ConexionApagadaException | SQLException ex) {
-            Logger.getLogger(SvUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             controlador.desconectar();
         } catch (SQLException ex) {
-            Logger.getLogger(SvUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

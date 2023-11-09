@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package codigo;
+package codigoDB;
 
 import java.util.Properties;
 import java.io.IOException;
