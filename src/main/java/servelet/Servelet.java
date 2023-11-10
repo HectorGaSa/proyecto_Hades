@@ -4,17 +4,10 @@
  */
 package servelet;
 
-import codigoDB.ConexionApagadaException;
+import servelet.ProcessData;
 import codigoDB.ProyectoDAO;
-import codigoDB.ProyectoDAO;
-import modelo.User;
-import modelo.User;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +29,12 @@ public class Servelet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ProcessData Procesador = new ProcessData();
+        
+        if(request.getParameter("registroForm").equals("registroForm")){
+            Procesador.proccesSignin(request);
+            response.sendRedirect("signin.jsp");
+        }
         
     }
 
@@ -48,29 +47,8 @@ public class Servelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException {
-        String nombre = request.getParameter("nombre");
-        String apellido1 = request.getParameter("apellido1");
-        String apellido2 = request.getParameter("apellido2");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String usuario = request.getParameter("usuario");
-        String password = request.getParameter("contrasena");
-        try {
-            controlador.conectar();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        User user = new User(usuario, password, email, "jugador");
-        try {
-            controlador.alta(user);
-        } catch (ConexionApagadaException | SQLException ex) {
-            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            controlador.desconectar();
-        } catch (SQLException ex) {
-            Logger.getLogger(Servelet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        processRequest(request,response);
     }
 
     @Override

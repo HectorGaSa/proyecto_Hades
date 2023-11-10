@@ -19,6 +19,7 @@
             <input class="controls" type="text" name="usuario" placeholder="Usuario"/>
             <input class="controls" type="password" name="contrasena" placeholder="Contraseña"/>
             <p></p>
+            <input type="hidden" id="registroForm" name="registroForm" />
             <button class="buttons" type="submit">"Registrar"</button>
         </form>
     </section>
